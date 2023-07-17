@@ -1,4 +1,5 @@
-﻿using GoReview.Models;
+﻿using GoReview.Data;
+using GoReview.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -12,7 +13,6 @@ namespace GoReview.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return View();
