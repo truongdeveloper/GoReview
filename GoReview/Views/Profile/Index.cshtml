@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 @model IEnumerable<GoReview.Models.Post>
@@ -94,7 +94,7 @@
             @for(var i = Model.Count() - 1;  i>=0; i--)
             {
                 var post = Model.ElementAt(i);
-                <div class="post-container">
+                <div class="post-container" id="post_@post.PostId">
 
                     <div class="post-row">
                         <div class="user-profile">
@@ -107,9 +107,12 @@
                             </div>
                         </div>
                         <div>
-                            <a asp-action="Edit" asp-route-id="@post.PostId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@post.PostId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
+                            <a class=" align-items-center border p-2 btn" asp-action="Edit" asp-controller="Posts" asp-route-id="@post.PostId">
+                                <i class="fa-solid fa-pen text-primary"></i>Edit</a> |
+                            <button class=" align-items-center border p-2" id="deleteButton" onclick="handleDeletePost(@post.PostId)">
+                                <i class="fa-solid fa-trash text-danger"></i>
+                                Delete
+                            </button>
                         </div>
 
                     </div>
@@ -117,6 +120,7 @@
                     <p class="post-text">
                         @post.Content
                     </p>
+                    @* <p class="inline" id="btnToggle">Xem thêm</p> *@
                     <img src="@Url.Content("~/image/" + post.Picture)" class="post-img" alt="">
 
                     <div class="post-row">
@@ -134,13 +138,17 @@
 
                 </div>
             }
-
-            
-
-
-
             <button type="button" class="load-more-btn">Load More </button>
-
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Bạn có chắc chắn muốn xóa?</p>
+                    <div class="modal-buttons">
+                        <button class="confirm_button" id="confirmButton">Đồng ý</button>
+                        <button class="confirm_button" id="cancelButton">Hủy bỏ</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

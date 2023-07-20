@@ -22,33 +22,6 @@ namespace GoReview.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: Posts
-        public async Task<IActionResult> Index()
-        {
-            var btlG21Context = _context.Posts.Include(p => p.Cat).Include(p => p.User);
-            return View(await btlG21Context.ToListAsync());
-        }
-
-        // GET: Posts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Posts == null)
-            {
-                return NotFound();
-            }
-
-            var post = await _context.Posts
-                .Include(p => p.Cat)
-                .Include(p => p.User)
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return View(post);
-        }
-
         // GET: Posts/Create
         public IActionResult Create()
         {
@@ -61,16 +34,14 @@ namespace GoReview.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,CatId,Title,Content,CreateDate")] Post post, IFormFile Picture)
+        public async Task<IActionResult> Create([Bind("CatId,Title,Content")] Post post, IFormFile Picture)
         {
 
             if (ModelState.IsValid)
             {
-
-                
                 _context.Add(post);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Profile");
             }
             if (Picture != null && Picture.Length > 0)
             {
@@ -87,7 +58,7 @@ namespace GoReview.Controllers
             post.CreateDate = DateTime.Now;
             _context.Add(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Privacy", "Home");
+            return RedirectToAction("Index", "Profile");
 
  
             //ViewData["CatId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", post.CatId);
@@ -150,43 +121,34 @@ namespace GoReview.Controllers
             return View(post);
         }
 
-        // GET: Posts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Posts == null)
-            {
-                return NotFound();
-            }
-
-            var post = await _context.Posts
-                .Include(p => p.Cat)
-                .Include(p => p.User)
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return View(post);
-        }
 
         // POST: Posts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Posts == null)
+            if (!PostExists(id))
             {
-                return Problem("Entity set 'BtlG21Context.Posts'  is null.");
+                return Json(new { success = false });
             }
-            var post = await _context.Posts.FindAsync(id);
-            if (post != null)
+
+            try
             {
-                _context.Posts.Remove(post);
+                var post = await _context.Posts.FindAsync(id);
+                if (post != null)
+                {
+                    _context.Posts.Remove(post);
+                }
+            
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+                
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
             }
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PostExists(int id)
