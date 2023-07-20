@@ -1,5 +1,6 @@
 ﻿using GoReview.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace GoReview.Controllers
@@ -7,10 +8,12 @@ namespace GoReview.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BtlG21Context _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BtlG21Context context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -18,9 +21,10 @@ namespace GoReview.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> PrivacyAsync()
         {
-            return View();
+            var btlG21Context = _context.Posts.Include(p => p.Cat).Include(p => p.User);
+            return View(await btlG21Context.ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

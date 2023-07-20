@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<BtlG21Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Database") ?? throw new InvalidOperationException("Connection string 'GoReviewContext' not found.")));
 
 var app = builder.Build();
 
