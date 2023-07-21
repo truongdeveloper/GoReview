@@ -10,7 +10,7 @@ GoReview/
 
 ## Config ko push G21Context
 BtlG21Context.cs
-GoReview/Modal/
+GoReview/Models/
 
 # User-specific files
 *.rsuser
