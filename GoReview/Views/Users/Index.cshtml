@@ -10,9 +10,9 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class=" w3-table-all">
     <thead>
-        <tr>
+        <tr class="w3-light-grey">
             <th>
                 @Html.DisplayNameFor(model => model.FullName)
             </th>
@@ -25,9 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserPassword)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ImageUser)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.UserRole)
             </th>
@@ -52,9 +52,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserPassword)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ImageUser)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.UserRole)
             </td>

@@ -15,5 +15,13 @@ namespace GoReview.Data
         }
 
         public DbSet<GoReview.Models.User> User { get; set; } = default!;
+
+        public DbSet<GoReview.Models.Post>? Post { get; set; }
+
+        public DbSet<GoReview.Models.Feedback>? Feedback { get; set; }
+
+        public DbSet<GoReview.Models.Comment>? Comment { get; set; }
+
+        public DbSet<GoReview.Models.Category>? Category { get; set; }
     }
 }

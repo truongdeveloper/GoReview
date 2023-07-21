@@ -20,5 +20,8 @@ namespace GoReview.Models
             public string? UserRole { get; set; }
             [Required]
             public string? Introduce { get; set;}
+            public ICollection<Comment>? Comments { get; set; }
+            public ICollection<Post>? Posts { get; set; }
+            public ICollection<Feedback>? Feedbacks { get; set; }
     }
 }

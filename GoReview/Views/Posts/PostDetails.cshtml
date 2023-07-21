@@ -1,0 +1,48 @@
+﻿@model GoReview.Models.Post
+
+@{
+    ViewData["Title"] = "PostDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex">
+
+    <!------------- Post 1----------------- -->
+    <div class="post-container">
+        
+            <div class="post-row">
+                <div class="user-profile">
+                    <img src="@Model.User.ImageUser" alt="">
+                    <div>
+                    <p>@Model.User.FullName</p>
+                        <span>
+                            @Model.CreateDate
+                        </span>
+                    </div>
+                </div>
+                <div>
+                @Model.Title
+                </div>
+            </div>
+
+            <p class="post-text">
+                @Model.Content
+            </p>
+            <img src="@Model.Picture" class="post-img" alt="">
+
+            <div class="post-row">
+
+                <div class="activity-icons">
+
+                    <div><img src="/images/like-blue.png" alt=""> @Model.NumLike</div>
+                    <a href="~/Posts/Details/@Model.PostId"> <img src="/images/comments.png" alt="">@Model.NumComment</a>
+                </div>
+                <button class="btn btn-outline-primary"> <a asp-action="Create">Comment</a> </button>
+            </div>
+
+    </div>
+   
+</div>
+
+
+

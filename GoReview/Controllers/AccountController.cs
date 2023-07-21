@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using GoReview.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoReview.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly GoReviewContext _context;
@@ -39,7 +41,7 @@ namespace GoReview.Controllers
                 var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, _user.UserEmail),
-                        new Claim("FullName", _user.UserName),
+                        new Claim("FullName", _user.FullName),
                         new Claim(ClaimTypes.Role, _user.UserRole),
                     };
 
@@ -65,7 +67,8 @@ namespace GoReview.Controllers
             HttpContext.SignOutAsync(
             CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("   ", "Account");
         }
     }
 }
+

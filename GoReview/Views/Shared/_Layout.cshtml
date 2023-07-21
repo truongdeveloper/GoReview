@@ -1,40 +1,45 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Nhom_G21</title>
+    <title>@ViewData["Title"] - GoReview</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Nhom_G21.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="~/path/to/your/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/bf2313f3e5.js" crossorigin="anonymous"></script>
-
-    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GoReview.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="nav-left">
-                <a asp-controller="Home" asp-action="Index"> <img src="/images/logo.png" class="logo" alt="Logo"> </a>
-                <a asp-action="Create" asp-controller="Posts" class="write-review">
-                    <i class="fa-solid fa-pen" style="color: white"></i>
-                    <h3 style="color: white">Viết Bài viết</h3>
-                </a>
-            </div>
-            <div class="nav-right">
-                <div class="search-box">
-                    <img src="/images/search.png" alt="">
-                    <input type="text" placeholder="Search">
+    <nav>
+        <div class="nav-left">
+            <a asp-controller="Home" asp-action="Index"> <img src="/images/logo.png" class="logo" alt="Logo"> </a>
+            <a asp-action="Create" asp-controller="Posts" class="write-review">
+                <i class="fa-solid fa-pen" style="color: white"></i>
+                <h3 style="color: white">Viết Bài viết</h3>
+            </a>
+        </div>
+
+        
+        <div class="nav-right">
+            <form method="get" asp-controller="Posts" asp-action="SearchPost">
+                <div class="search-box mx-3">
+               
+                        <img src="/images/search.png" alt="">
+                        <input type="text" name="name" placeholder="Search">
 
                 </div>
+             </form>
+            
+            @if (User.Identity.IsAuthenticated)
+            {
+
                 <div class="nav-user-icon online" onclick="settingsMenutoggle()">
                     <img src="/images/profile-pic.png" alt="">
-                </div>
+                </div>  
                 <!------------------- Sttings-menu----------------------->
-
-                <div class="settings-menu">
+            
+                    <div class="settings-menu">
 
                     <div id="dark-btn">
                         <span> </span>
@@ -56,93 +61,157 @@
                         <hr>
                         <div class="setting-links">
                             <img src="images/logout.png" class="settings-icon" alt="">
-                            <a href="#">Logout <img src="images/arrow.png" style="width:10px"></a>
+                            <a href="/Account/Login"> Logout <img src="images/arrow.png" style="width:20px"></a>
 
                         </div>
                     </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
+                    </div>
+            }
+            else
+            {
+                <a class="fw-bold text-white" href="/Account/Login">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+                </a>
+            }
+        </div>
+    </nav>
+    <div class="container-1">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <div class="d-flex">
+                <!----------- left-sidebar -------------->
+                <div class="left-sidebar">
+                    <div class="imp-links">
+                        <a href="/Users/index"><img src="/images/news.png">Dash board</a>
+                        <a href="/Account/Login"><img src="/images/friends.png">My Account</a>
+                        <a href="#"><img src="/images/group.png">Groups</a>
+                        <a href="#"><img src="/images/marketplace.png">Marketplace</a>
+                    </div>
+                    <div class="shortcut-links">
+
+                        <p>Category</p>
+                        <a href="#"><img src="/images/shortcut-1.png">Du lịch</a>
+                        <a href="#"><img src="/images/shortcut-2.png">Dịch vụ</a>
+                        
+                    </div>
+
+                </div>
+                <!--------------- main content starts---------------------->
+
+
+                @RenderBody()
+
+                <!-------------  main Content Ends---------------- -->
+                <!--------------------------- right-sidebar ---------------------------------->
+
+                <div class="right-sidebar">
+                    <div class="sidebar-title">
+                        <h4>Events</h4>
+                        <a href="#">See All</a>
+                    </div>
+
+                    <div class="event">
+                        <div class="left-event">
+                            <h3>25</h3>
+                            <span>March</span>
+                        </div>
+                        <div class="right-event">
+                            <h4>Social Media</h4>
+                            <p><i class="fa-solid fa-location-dot"></i> New Delhi</p>
+                            <a href="#">More Info</a>
+
+
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="left-event">
+                            <h3>29</h3>
+                            <span>March</span>
+                        </div>
+                        <div class="right-event">
+                            <h4> Technical Meet </h4>
+                            <p><i class="fa-solid fa-location-dot"></i> Noida, India</p>
+                            <a href="#">More Info</a>
+
+
+                        </div>
+                    </div>
+                    <div class="sidebar-title">
+                        <h4>Advertisement</h4>
+                        <a href="#">Close</a>
+                    </div>
+                    <img src="/images/advertisement.png" class="sidebar-ads" alt="">
+
+                    <div class="sidebar-title">
+                        <h4>Conversations</h4>
+                        <a href="#">Hide chat</a>
+                    </div>
+
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-1.png" alt="">
+                        </div>
+                        <p>Alisha Lian</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-2.png" alt="">
+                        </div>
+                        <p>Jason Roy</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-3.png" alt="">
+                        </div>
+                        <p>Lilly Groff</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-4.png" alt="">
+                        </div>
+                        <p>Sam Billings</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-5.png" alt="">
+                        </div>
+                        <p>Jack Billy</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-6.png" alt="">
+                        </div>
+                        <p>Anne Marry</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-7.png" alt="">
+                        </div>
+                        <p>Adam</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-8.png" alt="">
+                        </div>
+                        <p>Marison</p>
+                    </div>
+                    <div class="online-list">
+                        <div class="online">
+                            <img src="/images/member-9.png" alt="">
+                        </div>
+                        <p>Joe Rider</p>
+                    </div>
+
+
+                </div>
+
+
+            </div>
         </main>
     </div>
-    <footer class="container border-top mt-5">
-        <div class="row">
-            <div class="col-md-4">
-                <h3>About</h3>
-                <p>
-                    Mong các bạn có trải nghiệm tốt về website của tôi, nếu có gì chưa được
-                    tốt mong các bạn góp ý để website được hoàn thiện hơn
-                </p>
-            </div>
-            <div class="col-md-4 text-float-right">
-                <h3>Contacts</h3>
-                <ul>
-                    <li>
-                        <span><i class="fa fa-heart"></i></span>
-                        <a href="/Home">Home</a>
-                    </li>
-                    <li>
-                        <span><i class="fa fa-heart"></i></span><a href="/Login">Login</a>
-                    </li>
-                    <li>
-                        <span><i class="fa fa-heart"></i></span><a href="/Admin">Admint</a>
-                    </li>                
-                </ul>
-            </div>
-           
-            <div class="col-md-4">
-                <h3>Have a Questions?</h3>
-                <address>
-                    <div>
-                        <p>
-                            <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                            Ha Noi, VietNam
-                        </p>
-                    </div>
-                    <div>
-                        <p>
-                            <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                            <a href="tel:+84964698674"> +84 964698674 </a>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p>
-                            <span><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
-                            <a href="mailto:lthien575@gmail.com">
-                                lthien575@gmail.com
-                            </a>
-                        </p>
-                    </div>
-                </address>
-            </div>
-            <div class= "col-md-12 text-center py-4">
-                <a href="https://www.instagram.com/lthien575/" target="_blank">
-                    <i class="fa fa-instagram" aria-hidden="true"></i>
-
-                </a>
-
-                <a href="https://www.facebook.com/profile.php?id=100007529283089" target="_blank">
-
-                    <i class="fa fa-facebook-official m-1 p-2" aria-hidden="true"></i>
-
-                </a>
-
-                <a href="https://mail.google.com/mail" target="_blank">
-                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                </a>
-            </div>
-
-            <div class="col-md-12 text-center">
-              <p>
-               For all the lover | From clothing with love
-              </p>
-            </div>
-        </div>      
+    <footer class="border-top">
+        <div class="">
+            &copy; 2023 - GoReview - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

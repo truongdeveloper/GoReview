@@ -1,0 +1,76 @@
+﻿@model IEnumerable<GoReview.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class=" w3-table-all">
+    <thead>
+        <tr class="w3-light-grey">
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+           @* <th scope="col">
+                @Html.DisplayNameFor(model => model.Category)
+            </th>*@
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>*@
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.NumLike)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.NumComment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+           @* <td scope="col">
+                @Html.DisplayFor(modelItem => item.Category.Image)
+            </td>*@
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Picture)
+            </td>*@
+                <td scope="row">
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.NumLike)
+            </td>
+                <td scope="row">
+                @Html.DisplayFor(modelItem => item.NumComment)
+            </td>
+            <td scope="row">
+                <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

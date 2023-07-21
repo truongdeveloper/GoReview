@@ -1,8 +1,9 @@
-﻿@model User
+﻿
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model User
 <section class="vh-100">
     <div class="container-fluid">
         <div class="row">
@@ -28,6 +29,7 @@
                         </div>
                         <div class="flex-column form-outline mb-4">
                             <p class="form-label mb-2 fw-bold " for="form2Example28">Password</p>
+
                             @Html.TextBoxFor(m=>m.UserPassword,new {@placeholder="password"})
                         </div>
                         <div class="pt-1 mb-4">
@@ -45,3 +47,4 @@
         </div>
     </div>
 </section>
+
