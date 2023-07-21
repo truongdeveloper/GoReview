@@ -5,8 +5,12 @@
 
 
 ## Config không push ConnectString leen Repository
- appsettings.json
- GoReview/
+appsettings.json
+GoReview/
+
+## Config ko push G21Context
+BtlG21Context.cs
+GoReview/Modal/
 
 # User-specific files
 *.rsuser
