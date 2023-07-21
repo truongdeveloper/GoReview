@@ -13,38 +13,16 @@ namespace GoReview.Controllers
     public class CommentsController : Controller
     {
         private readonly GoReviewContext _context;
-
         public CommentsController(GoReviewContext context)
         {
             _context = context;
         }
-
         // GET: Comments
         public async Task<IActionResult> Index()
         {
             var goReviewContext = _context.Comment.Include(c => c.Post).Include(c => c.User);
             return View(await goReviewContext.ToListAsync());
         }
-        //Comment customer thays
-        public async Task<IActionResult> CommentDetails(int? id)
-        {
-            if (id == null || _context.Comment == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _context.Comment
-                .Include(m => m.CommentId)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.PostId == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            return View(comment);
-        }
-
         // GET: Comments/Details/5
         public async Task<IActionResult> Details(int? id)
         {

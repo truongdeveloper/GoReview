@@ -37,7 +37,7 @@
                     <div><img src="/images/like-blue.png" alt=""> @Model.NumLike</div>
                     <a href="~/Posts/Details/@Model.PostId"> <img src="/images/comments.png" alt="">@Model.NumComment</a>
                 </div>
-                <button class="btn btn-outline-primary"> <a asp-action="Create">Comment</a> </button>
+                <button class="btn btn-outline-primary"> <a asp-controller="Comments" asp-action="Create">Comment</a> </button>
             </div>
 
     </div>

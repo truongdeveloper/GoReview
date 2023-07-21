@@ -23,11 +23,9 @@
         
         <div class="nav-right">
             <form method="get" asp-controller="Posts" asp-action="SearchPost">
-                <div class="search-box mx-3">
-               
+                <div class="search-box mx-3">              
                         <img src="/images/search.png" alt="">
                         <input type="text" name="name" placeholder="Search">
-
                 </div>
              </form>
             
@@ -38,8 +36,8 @@
                     <img src="/images/profile-pic.png" alt="">
                 </div>  
                 <!------------------- Sttings-menu----------------------->
-            
-                    <div class="settings-menu">
+
+                <div class="settings-menu">
 
                     <div id="dark-btn">
                         <span> </span>
@@ -65,7 +63,7 @@
 
                         </div>
                     </div>
-                    </div>
+                </div>
             }
             else
             {
@@ -86,20 +84,11 @@
                         <a href="#"><img src="/images/group.png">Groups</a>
                         <a href="#"><img src="/images/marketplace.png">Marketplace</a>
                     </div>
-                    <div class="shortcut-links">
-
-                        <p>Category</p>
-                        <a href="#"><img src="/images/shortcut-1.png">Du lịch</a>
-                        <a href="#"><img src="/images/shortcut-2.png">Dịch vụ</a>
-                        
-                    </div>
+                   @(await Component.InvokeAsync("_Category"))
 
                 </div>
                 <!--------------- main content starts---------------------->
-
-
                 @RenderBody()
-
                 <!-------------  main Content Ends---------------- -->
                 <!--------------------------- right-sidebar ---------------------------------->
 

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GoReview.Data;
 using GoReview.Models;
+using System.Xml.Linq;
+using Microsoft.Extensions.Hosting;
 
 namespace GoReview.Controllers
 {
@@ -35,6 +37,24 @@ namespace GoReview.Controllers
 
              List<Post> post = _context.Post.Include(p => p.Category).Include(p => p.User).Where(m=>m.Content.Contains(name)).ToList();
             return View(post);
+        }
+        //
+        public async Task<IActionResult> PostbyCategory(int? catID)
+        {
+            if (catID == null || _context.Post == null)
+            {
+                return NotFound();
+            }
+            
+            var posttitle = await _context.Post
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.PostId == catID);
+            if (posttitle == null)
+            {
+                return NotFound();
+            }
+            return View(posttitle);
         }
         //Get/PostDetails/id
         public async Task<IActionResult> PostDetails(int? id)
@@ -201,5 +221,6 @@ namespace GoReview.Controllers
         {
           return (_context.Post?.Any(e => e.PostId == id)).GetValueOrDefault();
         }
+      
     }
 }
