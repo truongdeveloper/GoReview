@@ -6,10 +6,8 @@
 
 ## Config không push ConnectString leen Repository
 .config
-GoReview/
 
 appsettings.json
-GoReview/
 # User-specific files
 *.rsuser
 *.suo

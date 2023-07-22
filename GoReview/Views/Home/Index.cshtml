@@ -1,0 +1,77 @@
+﻿@model IEnumerable<GoReview.Models.Post>
+
+
+<div class="d-flex flex-column container post-col">
+
+        <!------------- Post 1----------------- -->
+            @for(var i = Model.Count() - 1;  i >= 0; i--)
+            {
+                var post = Model.ElementAt(i);
+                <div class="post-container" id="post_@post.PostId">
+
+                    <div class="post-row">
+                        <div class="user-profile">
+                            <img src="@Url.Content("/images/" + post.User.ImageUser)" alt="">
+                            <div>
+                                <div class="fs-5 text">
+                                    <p>@post.UserPost
+                                    <span class="fs-6 text"> - @post.CategoryTitle</span></p>
+                                </div>
+                                <span>
+                                    @post.CreateDate
+                                </span>
+                            </div>
+                        </div>
+                        @* <div class="d-flex gap-2">
+                            <a class=" align-items-center border p-2 d-flex" asp-action="Edit" asp-controller="Posts" asp-route-id="@post.PostId">
+                                <i class="fa-solid fa-pen text-primary"></i>Edit</a>
+                            <button class=" align-items-center border p-2" id="deleteButton" onclick="handleDeletePost(@post.PostId)">
+                                <i class="fa-solid fa-trash text-danger"></i>
+                                Delete
+                            </button>
+                        </div> *@
+
+                    </div>
+                    
+                    <div>
+                        <p class="post-title mt-2 fs-5">
+                            @post.Title
+                        </p>
+                        <p class="post-text">
+                            @post.Content
+                        </p>
+                    </div>
+
+                    @* <p class="inline" id="btnToggle">Xem thêm</p> *@
+                    <img src="@Url.Content("~/image/" + post.Picture)" class="post-img" alt="">
+
+                    <div class="post-row">
+
+                        <div class="activity-icons">
+
+                            <div>
+                            @if(true){
+                                <i class="fa-solid fa-heart fs-4 text-primary"></i>
+                                @post.NumberOfLikes
+                            }else{
+                                <i class="fa-solid fa-heart fs-5 text"></i>
+                            }
+                                
+                            </div>
+                            <div> <img src="/images/comments.png" alt="">226</div>
+                            <div><img src="/images/share.png" alt="">124</div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            }   
+        
+    </div>
+    <!--------------------------- right-sidebar ---------------------------------->
+
+
+
+    
