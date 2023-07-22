@@ -6,8 +6,7 @@
 
 ## Config không push ConnectString leen Repository
 .config
-
-appsettings.json
+.vscode
 # User-specific files
 *.rsuser
 *.suo
