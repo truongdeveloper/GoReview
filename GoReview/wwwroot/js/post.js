@@ -77,13 +77,19 @@ function handleDeletePost (postId) {// Lấy ID bài post từ trang của bạn
 
 function handleSearch() {
     var keyword = $("#inputSearch").val();
-
+    console.log(keyword)
     $.ajax({
-        url: "/Home/IndexAsync",
+        url: "/Home/Index",
         type: "POST",
         data: { keyword: keyword },
         success: function (data) {
-            displaySearchResults(data);
+            var resultsDiv = $("#searchResults");
+            var homeContainer = $("#post-home-container");
+            homeContainer.empty();
+            resultsDiv.empty();
+            alert("Search ok");
+            console.log(data);
+            resultsDiv.append(data);
         },
         error: function () {
             // Xử lý lỗi khi gọi Ajax
