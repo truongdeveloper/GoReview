@@ -20,7 +20,7 @@ namespace GoReview.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var _post = _context.Posts.Include(p => p.Feedbacks);
+            var _post = _context.Posts.Include(p => p.Cat).Include(p => p.User).Include(p => p.Feedbacks);
 
             if(User.Identity.IsAuthenticated)
             {
@@ -29,7 +29,7 @@ namespace GoReview.Controllers
                 foreach (var post in _post)
                 {
                     // Kiểm tra xem người dùng đã like bài viết hay chưa
-                    post.IsLiked = post.Feedbacks.Any(f => f.User.UserId == loggedInUserId && f.Like == true);
+                    post.IsLiked = post.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
                 }
             }
 

@@ -11,7 +11,7 @@ using System.Data;
 
 namespace GoReview.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+
     public class CategoryController : Controller
     {
         private readonly BtlG21Context _context;
