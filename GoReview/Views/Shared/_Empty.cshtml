@@ -1,0 +1,99 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GoReview</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GoReview.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a asp-controller="Home" asp-action="Index"> <img src="/images/logo.png" class="logo" alt="Logo"> </a>
+            <a asp-action="Create" asp-controller="Posts" class="write-review">
+                <i class="fa-solid fa-pen" style="color: white"></i>
+                <h3 style="color: white">Viết Bài viết</h3>
+            </a>
+        </div>
+
+
+        <div class="nav-right">
+            <form method="get" asp-controller="Posts" asp-action="SearchPost">
+                <div class="search-box mx-3">
+                    <img src="/images/search.png" alt="">
+                    <input type="text" name="name" placeholder="Search">
+                </div>
+            </form>
+
+            @*@if (User.Identity.IsAuthenticated)
+            {
+
+                <div class="nav-user-icon online" onclick="settingsMenutoggle()">
+                    <img src="/images/profile-pic.png" alt="">
+                </div>
+                <!------------------- Sttings-menu----------------------->
+
+                <div class="settings-menu">
+
+                    <div id="dark-btn">
+                        <span> </span>
+                    </div>
+
+                    <div class="settings-menu-inner">
+                        <div class="user-profile ">
+                            <a asp-action="Privacy" asp-controller="Home">
+                                <div class="d-flex" style="display: flex">
+                                    <img src="/images/profile-pic.png" alt="">
+                                    <div>
+                                        <h3>John Gray</h3>
+                                    </div>
+
+                                </div>
+
+                            </a>
+                        </div>
+                        <hr>
+                        <div class="setting-links">
+                            <img src="images/logout.png" class="settings-icon" alt="">
+                            <a href="/Account/Login"> Logout <img src="images/arrow.png" style="width:20px"></a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else*@
+            
+                <a class="fw-bold text-white" href="/Account/Login">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+                </a>
+   
+        </div>
+    </nav>
+    <div class="container-1">
+        <main role="main" class="pb-3">
+            <div class="d-flex">
+                <!----------- left-sidebar -------------->
+               
+                <!--------------- main content starts---------------------->
+                @RenderBody()
+                <!-------------  main Content Ends---------------- -->
+                <!--------------------------- right-sidebar ---------------------------------->
+
+               
+        </main>
+    </div>
+    <footer class="border-top">
+        <div class="">
+            &copy; 2023 - GoReview - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

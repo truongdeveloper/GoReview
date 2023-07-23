@@ -39,10 +39,28 @@
                 </div>
                 <button class="btn btn-outline-primary"> <a asp-controller="Comments" asp-action="Create">Comment</a> </button>
             </div>
-
+            <div id="listCommnet"></div>
     </div>
    
 </div>
+@section scripts {
+   <script>
+    $(document).ready(function(){
+            loadDsComment();
+    })
+            int postid = $("`@Model.PostId`")
+        function loadDsComment(postid) {
+        $ajax.({
+                url: '/Posts/DsComment',
+                type:'Get',
+                success:function(data){
+                    console.log(data);
+                }
+        })
+    }
+    </script>
+}
+
 
 
 

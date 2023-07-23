@@ -35,26 +35,17 @@ namespace GoReview.Controllers
                 return NotFound();
             }
 
-             List<Post> post = _context.Post.Include(p => p.Category).Include(p => p.User).Where(m=>m.Content.Contains(name)).ToList();
-            return View(post);
-        }
-        //
-        public async Task<IActionResult> PostbyCategory(int? catID)
-        {
-            if (catID == null || _context.Post == null)
-            {
-                return NotFound();
-            }
-            
-            var posttitle = await _context.Post
+             List<Post> post = _context.Post
                 .Include(p => p.Category)
                 .Include(p => p.User)
-                .FirstOrDefaultAsync(m => m.PostId == catID);
-            if (posttitle == null)
-            {
-                return NotFound();
-            }
-            return View(posttitle);
+                .Where(m=>m.Content.Contains(name)).ToList();
+            return View(post);
+        }
+        //tim bang PostbyCategory
+        public async Task<IActionResult> PostbyCategory(int? CatID)
+        {
+            var goReviewContext = _context.Post.Include(p => p.Category).Include(p => p.User).Where(m=>m.CategoryId==CatID);
+            return View(await goReviewContext.ToListAsync());
         }
         //Get/PostDetails/id
         public async Task<IActionResult> PostDetails(int? id)
@@ -100,7 +91,7 @@ namespace GoReview.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "Image");
+            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId","Title");
             ViewData["UserID"] = new SelectList(_context.User, "UserID", "FullName");
             return View();
         }
@@ -136,7 +127,7 @@ namespace GoReview.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "Image", post.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "Title", post.CategoryId);
             ViewData["UserID"] = new SelectList(_context.User, "UserID", "FullName", post.UserID);
             return View(post);
         }
@@ -173,7 +164,7 @@ namespace GoReview.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "Image", post.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "Title", post.CategoryId);
             ViewData["UserID"] = new SelectList(_context.User, "UserID", "FullName", post.UserID);
             return View(post);
         }
@@ -215,6 +206,20 @@ namespace GoReview.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        //Select Comment 
+        public JsonResult DsComment(int postID)
+        {
+            List<Comment> comments = _context.Comment.Include(c => c.Post).Include(c => c.User).Where(m=>m.PostId == postID)
+                .OrderBy(n=>n.CommentText)
+                .Select(n=> 
+                new Comment
+                {
+                    CommentId = n.CommentId,
+                    CommentText = n.CommentText
+                }
+                ).ToList();
+            return Json(comments);
         }
 
         private bool PostExists(int id)

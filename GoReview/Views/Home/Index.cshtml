@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<GoReview.Models.Post>
 
 
-<div class="d-flex">
+
+
+
+
+<div class="mx-2 d-flex">
 
         <!------------- Post 1----------------- -->
 
@@ -17,6 +21,7 @@
                         <span>
                            @item.CreateDate
                         </span>
+                        <span class="text-primary"> # @item.Category.Title</span>
                     </div>
                 </div>        
             </div>
@@ -39,7 +44,8 @@
          }
           </div>     
         
-    </div>
+</div>
+
     <!--------------------------- right-sidebar ---------------------------------->
 
     <div class="right-sidebar">
@@ -141,4 +147,4 @@
         </div>
 
 
-    
+    </div>

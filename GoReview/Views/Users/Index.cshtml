@@ -1,18 +1,15 @@
-﻿@model IEnumerable<GoReview.Models.User>
+﻿@model IEnumerable< GoReview.Models.User>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h1>Index</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class=" w3-table-all">
+<table class="table">
     <thead>
-        <tr class="w3-light-grey">
+        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.FullName)
             </th>
@@ -25,9 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserPassword)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.ImageUser)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.UserRole)
             </th>
@@ -38,28 +35,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach(var item in Model){
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FullName)
+                @Html.DisplayFor(modelModel => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(modelModel => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserEmail)
+                @Html.DisplayFor(modelModel => item.UserEmail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserPassword)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ImageUser)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.UserRole)
+                @Html.DisplayFor(modelModel => item.UserPassword)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Introduce)
+                @Html.DisplayFor(modelModel => item.ImageUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelModel => item.UserRole)
+            </td>
+            <td>
+                @Html.DisplayFor(modelModel => item.Introduce)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> |
@@ -67,6 +64,6 @@
                 <a asp-action="Delete" asp-route-id="@item.UserID">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

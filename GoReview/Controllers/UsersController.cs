@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,12 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GoReview.Data;
 using GoReview.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace GoReview.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
         private readonly GoReviewContext _context;

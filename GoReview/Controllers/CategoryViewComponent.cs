@@ -15,7 +15,7 @@ namespace GoReview.Controllers
         }
         public IViewComponentResult Invoke()    
         {
-            var _category = _context.Post.ToList();
+            var _category = _context.Category.ToList();
             return View("_Category",_category);
         }
     }

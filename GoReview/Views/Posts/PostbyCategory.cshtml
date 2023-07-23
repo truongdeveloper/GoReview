@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "PostbyCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<GoReview.Models.Post>
+
+
+<div class="d-flex">
+
+    <!------------- Post 1----------------- -->
+    <div class="post-container">
+        @foreach (var item in Model)
+        {
+            <div class="post-row">
+                <div class="user-profile">
+                    <img src="@item.User.ImageUser" alt="">
+                    <div>
+                        <p>@item.User.UserName</p>
+                        <span>
+                            @item.CreateDate
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="post-text">
+                @item.Content
+            </p>
+            <img src="@item.Picture" class="post-img" alt="">
+
+            <div class="post-row">
+
+                <div class="activity-icons">
+
+                    <div><img src="/images/like-blue.png" alt=""> @item.NumLike</div>
+                    <a href="/Posts/PostDetails/@item.PostId"> <img src="/images/comments.png" alt="">@item.NumComment</a>
+                </div>
+            </div>
+
+            <hr />
+        }
+    </div>
+</div>
+
