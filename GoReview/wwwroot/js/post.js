@@ -27,6 +27,8 @@ $(document).ready(function() {
     });
 });
 
+
+
 var modal = $("#myModal");
 var closeButton = $(".close, #cancelButton");
 var confirmButton = $("#confirmButton");
@@ -46,7 +48,7 @@ function handleDeletePost (postId) {// Lấy ID bài post từ trang của bạn
             isDelete = true;
             $.ajax({
                 type: "POST",
-                url: "/Posts/DeleteConfirmed", // Đường dẫn tới action DeletePost trong controller Profile
+                url: "/Profile/DeleteByUserConfirmed", // Đường dẫn tới action DeletePost trong controller Profile
                 data: { id: postId }, // Truyền tham số ID bài post vào đây
                 success: function (data) {
                     if (data.success) {

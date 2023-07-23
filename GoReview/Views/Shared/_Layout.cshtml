@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var ImageUser = User.FindFirst("ImageUser")?.Value;
+    bool isLogin = User.Identity.IsAuthenticated;
+    bool isAdmin = User.FindFirst("UserRole")?.Value == "Administrator";
+    var UserName = User.FindFirst("Name")?.Value;
+}
+
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,25 +22,32 @@
     <nav>
         <div class="nav-left">
             <a asp-controller="Home" asp-action="Index"> <img src="/images/logo.png" class="logo" alt="Logo"> </a>
-            <a asp-action="Create" asp-controller="Posts" class="write-review pt-2 pb-1 pr-">
+            <a asp-action="Create" asp-controller="Posts" class="write-review pt-2 pb-1">
                 <i class="fa-solid fa-pen" style="color: white"></i>
                 <h3 style="color: white">Viết bài viết</h3>
             </a>
+            @if (isAdmin)
+            {
+                <a asp-action="Index" asp-controller="Admin" class="write-review pt-2 pb-1">
+                    <h3 style="color: white">Administrator</h3>
+                </a>
+            }
         </div>
         <div class="nav-right">
-                       <form method="get" asp-controller="Posts" asp-action="SearchPost">
+              <form method="get" asp-controller="Posts" asp-action="SearchPost">
                 <div class="search-box mx-3">              
                         <img src="/images/search.png" alt="">
                         <input type="text" name="name" placeholder="Search">
                 </div>
              </form>
             
-            @if (User.Identity.IsAuthenticated)
+            @if (isLogin)
             {
 
                 <div class="nav-user-icon online" onclick="settingsMenutoggle()">
-                    <img src="/images/profile-pic.png" alt="">
-                </div>  
+                    <img src="@Url.Content("/images/" + ImageUser)" alt="">
+                </div>
+
                 <!------------------- Sttings-menu----------------------->
 
                 <div class="settings-menu">
@@ -45,9 +60,9 @@
                         <div class="user-profile ">
                             <a asp-action="Index" asp-controller="Profile">
                                 <div class="d-flex" style="display: flex">
-                                    <img src="/images/profile-pic.png" alt="">
+                                    <img src="@Url.Content("/images/" + ImageUser)" alt="">
                                     <div>
-                                        <h3>John Gray</h3>
+                                        <h3>@UserName</h3>
                                     </div>
 
                                 </div>
@@ -86,6 +101,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/post.js" asp-append-version="true"></script>
+    <script src="~/js/feedbacks.js" asp-append-version="true"></script>
     <script src="~/js/profile.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

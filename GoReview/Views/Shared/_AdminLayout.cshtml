@@ -1,6 +1,13 @@
-    
-    @model User;
-    <!DOCTYPE html>
+@{
+    var ImageUser = User.FindFirst("ImageUser")?.Value;
+    bool isLogin = User.Identity.IsAuthenticated;
+    bool isAdmin = User.FindFirst("UserRole")?.Value == "Administrator";
+    var UserName = User.FindFirst("Name")?.Value;
+    var EmailUser = User.FindFirst("UserEmail")?.Value;
+}
+
+
+<!DOCTYPE html>
     <html>
     <head>
     <title>W3.CSS Template</title>
@@ -34,10 +41,10 @@
         <div class="w3-col s8 w3-bar">
             <h3>
                 <div>Welcome</div>
-                <strong>@Model.UserName</strong>
+                <strong>@UserName</strong>
             </h3>
         </div>
-        <p>@Model.UserEmail</p>
+        <p>@EmailUser</p>
       </div>
       <hr>
       <div class="w3-container">
@@ -46,11 +53,10 @@
       <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
         <a href="/Home" class="w3-bar-item w3-button w3-padding "><i class="fa fa-users fa-fw"></i>  Home Page</a>
-        <a href="/Users" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-eye fa-fw"></i>  Users</a>
+        <a href="/Users" class="w3-bar-item w3-button w3-padding "><i class="fa fa-eye fa-fw"></i>  Users</a>
         <a href="/Posts" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Posts</a>
-        <a href="/Categories" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Categories</a>
+        <a href="/Category" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Category</a>
         <a href="/Feedbacks" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  Feedbacks</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
         
       </div>
     </nav>

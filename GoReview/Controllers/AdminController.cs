@@ -1,9 +1,12 @@
 using GoReview.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace GoReview.Controllers
 {
-    
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         private readonly BtlG21Context _context;
@@ -12,11 +15,9 @@ namespace GoReview.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var UserID = 1;
-            var user = _context.Users.FirstOrDefault( p => p.UserId == UserID);
-            return View(user);
+            return View();
         }
     }
 }

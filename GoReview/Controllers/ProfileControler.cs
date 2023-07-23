@@ -1,7 +1,8 @@
-using GoReview.Models;
+﻿using GoReview.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace GoReview.Controllers
 {
@@ -16,20 +17,60 @@ namespace GoReview.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var UserID = 1;
-            var btlG21Context = _context.Posts
-            .Include(p => p.User)
-            .Include(p => p.Cat)
-            .Include(p => p.Feedbacks);
-            
-            return View(await btlG21Context.ToListAsync());
+
+            if(User.Identity.IsAuthenticated)
+            {
+                var UserID = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                Console.WriteLine(UserID.ToString());
+                var _post = _context.Posts
+                    .Include(p => p.Cat)
+                    .Include(p => p.User)
+                    .Include(p => p.Feedbacks);
+  
+                //.Where( p => p.User.UserId == UserID);
+                foreach (var post in _post)
+                {
+                    // Kiểm tra xem người dùng đã like bài viết hay chưa
+                    post.IsLiked = post.Feedbacks.Any(f => f.User.UserId == UserID && f.Like == true);
+                }
+                var postFillter = _post.Where(p => p.UserId == UserID).ToList();
+
+                return View(model: postFillter);
+            }
+            return RedirectToAction("Login", "Authen");            
         }
 
-        public async Task<IActionResult> PrivacyAsync()
+        [HttpPost]
+        public async Task<IActionResult> DeleteByUserConfirmed(int id)
         {
-            var btlG21Context = _context.Posts.Include(p => p.Cat).Include(p => p.User);
-            return View(await btlG21Context.ToListAsync());
+            if (!PostExists(id))
+            {
+                return Json(new { success = false });
+            }
+            try
+            {
+                var post = await _context.Posts.FindAsync(id);
+                if (post != null)
+                {
+                    _context.Posts.Remove(post);
+                }
+
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+
+            }
+            catch (System.Exception)
+            {
+
+                return Json(new { success = false });
+            }
+
         }
 
+
+        private bool PostExists(int id)
+        {
+            return (_context.Posts?.Any(e => e.PostId == id)).GetValueOrDefault();
+        }
     }
 }
