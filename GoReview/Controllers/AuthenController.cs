@@ -34,11 +34,17 @@ namespace GoReview.Controllers
             else
             {
                 var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, _user.UserEmail),
+                {
+                        new Claim(ClaimTypes.NameIdentifier, _user.UserId.ToString()),
+                        new Claim("UserId", _user.UserId.ToString()),
+                        new Claim("Name", _user.UserName),
                         new Claim("FullName", _user.FullName),
+                        new Claim("ImageUser", _user.ImageUser),
+                        new Claim("UserEmail", _user.UserEmail),
+                        new Claim("Introduce", _user.Introduce),
+                        new Claim("UserRole", _user.UserRole),
                         new Claim(ClaimTypes.Role, _user.UserRole),
-                    };
+                };
 
                 var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);

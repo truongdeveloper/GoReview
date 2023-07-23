@@ -40,8 +40,11 @@ public partial class Post
 
     public int? NumberOfLikes => Feedbacks?.Count(f => f.Like == true);
 
+    public int? NumberOfComment => Feedbacks?.Count(f => f.Comment != null);
+    
     public string? UserPost => User?.UserName;
 
-    // public bool isLike => Feedbacks.Any(f => f.UserId == User.UserId);
+    public bool IsLiked;
+
 
 }

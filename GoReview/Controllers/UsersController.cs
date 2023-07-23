@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,12 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GoReview.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace GoReview.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
         private readonly BtlG21Context _context;
@@ -24,9 +21,10 @@ namespace GoReview.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                    View(await _context.Users.ToListAsync()) :
-                    Problem("Entity set 'GoReviewContext.User'  is null.");
+            var users = await _context.Users.ToListAsync();
+            return _context.Users != null ? 
+                          View(users) :
+                          Problem("Entity set 'BtlG21Context.Users'  is null.");
         }
 
         // GET: Users/Details/5
@@ -58,7 +56,7 @@ namespace GoReview.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,FullName,UserName,UserEmail,UserPassword,ImageUser,UserRole,Introduce")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FullName,UserName,UserEmail,UserPassword,ImageUser,UserRole,Introduce")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +88,7 @@ namespace GoReview.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,FullName,UserName,UserEmail,UserPassword,ImageUser,UserRole,Introduce")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,FullName,UserName,UserEmail,UserPassword,ImageUser,UserRole,Introduce")] User user)
         {
             if (id != user.UserId)
             {
@@ -145,7 +143,7 @@ namespace GoReview.Controllers
         {
             if (_context.Users == null)
             {
-                return Problem("Entity set 'GoReviewContext.User'  is null.");
+                return Problem("Entity set 'BtlG21Context.Users'  is null.");
             }
             var user = await _context.Users.FindAsync(id);
             if (user != null)
