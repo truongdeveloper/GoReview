@@ -44,3 +44,35 @@ function createCommentElement(comment) {
         `;
     return $(commentHtml); // Trả về phần tử HTML dưới dạng jQuery object
 }
+var likeButton = $("#btn-like");
+var isLikeAction = false;
+likeButton.click(function () {
+
+    var postId = $(this).closest(".post").data("postid");
+    console.log(postId);
+
+    // Kiểm tra xem hành động like có đang được thực hiện hay không
+    if (!isLikeAction) {
+        isLikeAction = true;
+        $.ajax({
+            type: "POST",
+            url: "/Feedbacks/LikeAction",
+            data: { id: postId }, // Truyền tham số ID bài post vào đây
+            success: function (data) {
+                if (data.isLiked) {
+                    // Thực hiện các tác vụ khi like thành công
+                    alert("Like thành công!");
+                } else {
+                    // Thực hiện các tác vụ khi unlike thành công
+                    alert("Unlike thành công!");
+                }
+                isLikeAction = false; // Đánh dấu là đã hoàn tất hành động like/unlike
+            },
+            error: function () {
+                // Xử lý lỗi khi gọi Ajax
+                alert("Đã xảy ra lỗi khi thực hiện hành động like/unlike!");
+                isLikeAction = false; // Đánh dấu là đã hoàn tất hành động like/unlike (dù có lỗi hay không)
+            }
+        });
+    }
+});

@@ -44,9 +44,9 @@
 
                 <div class="post-row">
 
-                    <div class="activity-icons">
+                <div class="activity-icons post" data-postid="@post.PostId">
 
-                        <div>
+                        <button id="btn-like">
                         @if(post.IsLiked){
                             <i class="fa-solid fa-heart fs-4 text-primary"></i>
                             @post.NumberOfLikes
@@ -55,7 +55,7 @@
                             @post.NumberOfLikes
                         }
                                 
-                        </div>
+                        </button>
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#Comment_@post.PostId" aria-expanded="false" aria-controls="collapseExample">
                             <img src="/images/comments.png" alt="">@post.NumberOfComment
                         </button>
@@ -114,8 +114,6 @@
                     </h2>  
                 }
 
-                        
-                        
                 </div>
 
             </div>
