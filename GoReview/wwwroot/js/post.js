@@ -73,3 +73,45 @@ function handleDeletePost (postId) {// Lấy ID bài post từ trang của bạn
     });
     
 };
+
+
+function handleSearch() {
+    var keyword = $("#inputSearch").val();
+
+    $.ajax({
+        url: "/Home/IndexAsync",
+        type: "POST",
+        data: { keyword: keyword },
+        success: function (data) {
+            displaySearchResults(data);
+        },
+        error: function () {
+            // Xử lý lỗi khi gọi Ajax
+            alert("Đã xảy ra lỗi khi Search!");
+        }
+    });
+
+}
+
+function displaySearchResults(data) {
+    var resultsDiv = $("#searchResults");
+    resultsDiv.empty();
+
+    if (data != null) {
+        $.each(data, function (index, item) {
+            // Xây dựng nội dung HTML để hiển thị thông tin bài viết
+            // Ví dụ:
+            var html = `
+                <div class="post">
+                    <h3>${item.Title}</h3>
+                    <p>${item.Content}</p>
+                </div>
+            `;
+
+            // Thêm nội dung HTML vào resultsDiv
+            resultsDiv.append(html);
+        });
+    } else {
+        resultsDiv.text("Không tìm thấy kết quả.");
+    }
+}

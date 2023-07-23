@@ -21,10 +21,8 @@ namespace GoReview.Controllers
             if(User.Identity.IsAuthenticated)
             {
                 var UserID = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                Console.WriteLine(UserID.ToString());
                 var _post = _context.Posts
-                    .Include(p => p.Cat)
-                    .Include(p => p.User)
+                    
                     .Include(p => p.Feedbacks);
   
                 //.Where( p => p.User.UserId == UserID);
@@ -35,7 +33,7 @@ namespace GoReview.Controllers
                 }
                 var postFillter = _post.Where(p => p.UserId == UserID).ToList();
 
-                return View(model: postFillter);
+                return View(postFillter);
             }
             return RedirectToAction("Login", "Authen");            
         }

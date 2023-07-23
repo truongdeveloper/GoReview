@@ -20,7 +20,7 @@ namespace GoReview.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var _post = _context.Posts.Include(p => p.Cat).Include(p => p.User).Include(p => p.Feedbacks);
+            var _post = _context.Posts.Include(p => p.Feedbacks);
 
             if(User.Identity.IsAuthenticated)
             {
@@ -36,6 +36,33 @@ namespace GoReview.Controllers
 
             return View(_post);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> IndexAsync(string keyword)
+        {
+            var _post = _context.Posts.Include(p => p.Cat).Include(p => p.User).Include(p => p.Feedbacks);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                int loggedInUserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                foreach (var post in _post)
+                {
+                    // Kiểm tra xem người dùng đã like bài viết hay chưa
+                    post.IsLiked = post.Feedbacks.Any(f => f.User.UserId == loggedInUserId && f.Like == true);
+                }
+            }
+
+            List<Post> postFillter = _post.Where(p => p.Title.Contains(keyword)).ToList();
+
+
+            return Json(new
+            {
+                Title = "truong",
+                Content = "truong"
+            });
+        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
