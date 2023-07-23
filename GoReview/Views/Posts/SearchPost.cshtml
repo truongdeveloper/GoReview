@@ -14,9 +14,9 @@
             <a href="#"><img src="/images/marketplace.png">Marketplace</a>
         </div>
         <div class="d-flex flex-column my-4">
-            @for (var i = Model.Count()-1 ; i >= 0; i--)
+            @for (var i = Model.Count() - 1; i >= 0; i--)
             {
-           
+
                 var post = Model.ElementAt(i);
                 <a class="mb-3" href="">
                     <img src="@post.Cat.Image">
@@ -145,8 +145,4 @@
 </div>
 
 
-    <!--------------------------- right-sidebar ---------------------------------->
-
-
-
-    
+<!--------------------------- right-sidebar ---------------------------------->

@@ -31,7 +31,19 @@ namespace GoReview.Controllers
             var goReviewContext = _context.Posts.Include(p => p.Cat).Include(p => p.User);
             return View(await goReviewContext.ToListAsync());
         }
+        public async Task<IActionResult> SearchPost(string name)
+        {
+            if (name == null || _context.Posts == null)
+            {
+                return NotFound();
+            }
 
+            List<Post> post = _context.Posts
+               .Include(p => p.Cat)
+               .Include(p => p.User)
+               .Where(m => m.Content.Contains(name)).ToList();
+            return View(post);
+        }
 
         // GET: Posts/Create
         public IActionResult Create()
