@@ -213,25 +213,61 @@ namespace GoReview.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult LikeAction(int id)
+        public async Task<IActionResult> LikeActionAsync(int id)
         {
-            int loggedInUserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            
-            Feedback newFeedback = new Feedback
+            try
             {
-                PostId = id,
-                UserId = loggedInUserId,
-                Like = true,
-                Comment = null
-            };
-            Console.WriteLine(newFeedback);
-            _context.Feedbacks.Add(newFeedback);
-            _context.SaveChanges();
+                // Kiểm tra xem người dùng đã đăng nhập chưa
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện hành động này." });
+                }
 
-            return Json(new
+                // Lấy ID của người dùng đăng nhập
+                int loggedInUserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                // Tìm bài viết dựa trên postId
+                var post = await _context.Posts.FindAsync(id);
+
+                // Kiểm tra xem bài viết có tồn tại không
+                if (post == null)
+                {
+                    return Json(new { success = false, message = "Bài viết không tồn tại." });
+                }
+
+                // Kiểm tra xem người dùng đã like bài viết hay chưa
+                bool isLiked = _context.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
+
+                if (!isLiked)
+                {
+                    // Nếu chưa like thì thêm like vào bài viết
+                    Feedback feedback = new Feedback
+                    {
+                        UserId = loggedInUserId,
+                        PostId = id,
+                        Like = true,
+                        Comment = null,
+                    };
+
+                    _context.Feedbacks.Add(feedback);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    // Nếu đã like rồi thì hủy like
+                    var feedback = _context.Feedbacks.FirstOrDefault(f => f.UserId == loggedInUserId && f.Like == true);
+                    _context.Feedbacks.Remove(feedback);
+                    await _context.SaveChangesAsync();
+                }
+
+                // Trả về kết quả thành công
+                return Json(new { isLiked = !isLiked, });
+            }
+            catch (Exception ex)
             {
-                Like = newFeedback.Like
-            }); // Trả về thông báo bình luận dưới dạng JSON
+                // Xử lý lỗi nếu có
+                return Json(new { success = false, message = "Đã xảy ra lỗi khi thực hiện hành động like." });
+            }
         }
     }
 }

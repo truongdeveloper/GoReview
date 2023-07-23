@@ -44,14 +44,21 @@ function createCommentElement(comment) {
         `;
     return $(commentHtml); // Trả về phần tử HTML dưới dạng jQuery object
 }
-var likeButton = $("#btn-like");
-var isLikeAction = false;
-likeButton.click(function () {
+//var likeButton = $("#btn-like");
 
+//likeButton.click(function () {
+
+//    var postId = $(this).closest(".post").data("postid");
+//    console.log(postId);
+
+//    // Kiểm tra xem hành động like có đang được thực hiện hay không
+    
+//});
+
+$(document).on('click', '#btn-like', function () {
     var postId = $(this).closest(".post").data("postid");
     console.log(postId);
-
-    // Kiểm tra xem hành động like có đang được thực hiện hay không
+    var isLikeAction = false;
     if (!isLikeAction) {
         isLikeAction = true;
         $.ajax({
@@ -59,6 +66,7 @@ likeButton.click(function () {
             url: "/Feedbacks/LikeAction",
             data: { id: postId }, // Truyền tham số ID bài post vào đây
             success: function (data) {
+                console.log(data)
                 if (data.isLiked) {
                     // Thực hiện các tác vụ khi like thành công
                     alert("Like thành công!");
