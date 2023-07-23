@@ -45,6 +45,7 @@ public partial class Post
     public string? UserPost => User?.UserName;
 
     public bool IsLiked;
+    public string? UserImage => User?.ImageUser;
 
 
 }

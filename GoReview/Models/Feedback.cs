@@ -26,6 +26,10 @@ public partial class Feedback
     public virtual Post Post { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
-    
+
+    public string? UserImage => User?.ImageUser;
+    public string? UserPost => User?.UserName;
+
+
 
 }
