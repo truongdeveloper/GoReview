@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GoReview.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GoReview.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class CategoryController : Controller
     {
         private readonly BtlG21Context _context;

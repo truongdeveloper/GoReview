@@ -210,5 +210,28 @@ namespace GoReview.Controllers
         //    Trả về dữ liệu dưới dạng JSON
         //    return Json(comments);
         //}
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult LikeAction(int id)
+        {
+            int loggedInUserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            
+            Feedback newFeedback = new Feedback
+            {
+                PostId = id,
+                UserId = loggedInUserId,
+                Like = true,
+                Comment = null
+            };
+            Console.WriteLine(newFeedback);
+            _context.Feedbacks.Add(newFeedback);
+            _context.SaveChanges();
+
+            return Json(new
+            {
+                Like = newFeedback.Like
+            }); // Trả về thông báo bình luận dưới dạng JSON
+        }
     }
 }

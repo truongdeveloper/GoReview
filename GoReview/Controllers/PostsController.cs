@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GoReview.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class PostsController : Controller
     {
         private readonly BtlG21Context _context;
