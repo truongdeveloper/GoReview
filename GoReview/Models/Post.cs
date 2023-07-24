@@ -48,4 +48,9 @@ public partial class Post
     public string? UserImage => User?.ImageUser;
 
 
+    //[Required(ErrorMessage = "Trường này là bắt buộc.")]
+    //[StringLength(50, MinimumLength = 3, ErrorMessage = "Độ dài tối thiểu là 3 và tối đa là 50 ký tự.")]
+    //[Range(18, 100, ErrorMessage = "Tuổi phải từ 18 đến 100.")]
+    //[EmailAddress(ErrorMessage = "Email không hợp lệ.")]
+    //[Compare("Password", ErrorMessage = "Xác nhận mật khẩu không khớp.")]
 }
