@@ -223,11 +223,12 @@ namespace GoReview.Controllers
                     return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện hành động này." });
                 }
 
+                IQueryable<Post> query = _context.Posts.Include(p => p.Cat).Include(p => p.User).Include(p => p.Feedbacks);
                 // Lấy ID của người dùng đăng nhập
                 int loggedInUserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
                 // Tìm bài viết dựa trên postId
-                var post = await _context.Posts.FindAsync(id);
+                Post post = query.FirstOrDefault(p => p.PostId == id);
 
                 // Kiểm tra xem bài viết có tồn tại không
                 if (post == null)
@@ -235,8 +236,9 @@ namespace GoReview.Controllers
                     return Json(new { success = false, message = "Bài viết không tồn tại." });
                 }
 
+                
                 // Kiểm tra xem người dùng đã like bài viết hay chưa
-                bool isLiked = _context.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
+                bool isLiked = post.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
 
                 if (!isLiked)
                 {
@@ -255,7 +257,7 @@ namespace GoReview.Controllers
                 else
                 {
                     // Nếu đã like rồi thì hủy like
-                    var feedback = _context.Feedbacks.FirstOrDefault(f => f.UserId == loggedInUserId && f.Like == true);
+                    var feedback = post.Feedbacks.FirstOrDefault(f => f.UserId == loggedInUserId && f.Like == true);
                     _context.Feedbacks.Remove(feedback);
                     await _context.SaveChangesAsync();
                 }
