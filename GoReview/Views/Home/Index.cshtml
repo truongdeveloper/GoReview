@@ -8,7 +8,7 @@
 
 
 
-<div class="d-flex flex-column container post-col" id="post-home-container">
+<div class="d-flex flex-column container post-col" style="max-width: 900px" id="post-home-container">
 
         <!------------- Post 1----------------- -->
         @for(var i = Model.Count() - 1;  i >= 0; i--)
@@ -48,10 +48,10 @@
 
                 <div class="activity-icons post" data-postid="@post.PostId">
                     <div class="post" data-postid="@post.PostId">
-                        <button id="btn-like">
+                        <button class="btn" id="btn-like">
                             @if (post.IsLiked)
                             {
-                                <i class="fa-solid fa-heart fs-4 text-primary"></i>
+                                <i class="fa-solid fa-heart fs-3 text-primary"></i>
                                 @post.NumberOfLikes
                             }
                             else
@@ -63,8 +63,8 @@
                         </button>
                     </div>
                         
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#Comment_@post.PostId" aria-expanded="false" aria-controls="collapseExample">
-                            <img src="/images/comments.png" alt="">@post.NumberOfComment
+                        <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#Comment_@post.PostId" aria-expanded="false" aria-controls="collapseExample">
+                            <img src="/images/comments.png" style="width: 30px" alt="">@post.NumberOfComment
                         </button>
 
                     </div>

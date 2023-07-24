@@ -29,7 +29,7 @@ namespace GoReview.Controllers
                 foreach (var post in query)
                 {
                     // Kiểm tra xem người dùng đã like bài viết hay chưa
-                    post.IsLiked = _context.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
+                    post.IsLiked = post.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
                 }
             }
 
@@ -73,8 +73,19 @@ namespace GoReview.Controllers
         //}
 
 
+        //var motel = await _context.tblMotel.ToListAsync();
+        //switch(value){
+        //    case "reduce_price":
+        //        motel = await _context.tblMotel.OrderByDescending(m => m.Price).ToListAsync();
+        //        break;
+        //    default:
+        //        motel = await _context.tblMotel.OrderBy(m => m.Price).ToListAsync();
+        //        break;
+        //}
+        //return View("~/Views/User/Index.cshtml", motel);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
