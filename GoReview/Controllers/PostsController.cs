@@ -93,8 +93,8 @@ namespace GoReview.Controllers
             {
                 return NotFound();
             }
-            ViewData["CatId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", post.CatId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", post.UserId);
+            ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "Title", post.CatId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FullName", post.UserId);
             return View(post);
         }
 
@@ -103,7 +103,7 @@ namespace GoReview.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,UserId,CatId,Title,Content,Picture,CreateDate")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,UserID,CategoryId,Title,Content,Picture,CreateDate,NumLike,NumComment")] Post post)
         {
             if (id != post.PostId)
             {
@@ -130,10 +130,11 @@ namespace GoReview.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CatId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", post.CatId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", post.UserId);
+            ViewData["CatId"] = new SelectList(_context.Categories, "CatId", "Title", post.CatId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "FullName", post.UserId);
             return View(post);
         }
+
 
         public async Task<IActionResult> Delete(int? id)
         {

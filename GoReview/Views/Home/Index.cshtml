@@ -31,17 +31,18 @@
                     </div>
                 </div>
                     
-                <div>
-                    <p class="post-title mt-2 fs-5">
+                
+                    <p class="post-title mt-2 ">
                         @post.Title
                     </p>
                     <p class="post-text">
                         @post.Content
                     </p>
-                </div>
+                    <img src="@Url.Content("/images/" + post.Picture)" class="post-img" alt="">
+                
 
-                    <p class="inline" id="btnToggle">Xem thêm</p> 
-                <img src="@Url.Content("~/image/" + post.Picture)" class="post-img" alt="">
+                    @*<p class="inline" id="btnToggle">Xem thêm</p> *@
+               
 
                 <div class="post-row">
 

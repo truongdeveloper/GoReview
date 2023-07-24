@@ -95,7 +95,7 @@ namespace GoReview.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 try
                 {
