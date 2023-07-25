@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GoReview.Data;
 using GoReview.Models;
-using System.Xml.Linq;
-using Microsoft.Extensions.Hosting;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace GoReview.Controllers
 {
@@ -35,12 +33,13 @@ namespace GoReview.Controllers
                 return NotFound();
             }
 
-             List<Post> post = _context.Post
-                .Include(p => p.Category)
-                .Include(p => p.User)
-                .Where(m=>m.Content.Contains(name)).ToList();
+            List<Post> post = _context.Post
+              .Include(p => p.Category)
+             .Include(p => p.User)
+              .Where(m => m.Title.Contains(name)).ToList();
             return View(post);
         }
+        
         //tim bang PostbyCategory
         public async Task<IActionResult> PostbyCategory(int? CatID)
         {
@@ -208,19 +207,19 @@ namespace GoReview.Controllers
             return RedirectToAction(nameof(Index));
         }
         //Select Comment 
-        public JsonResult DsComment(int postID)
-        {
-            List<Comment> comments = _context.Comment.Include(c => c.Post).Include(c => c.User).Where(m=>m.PostId == postID)
-                .OrderBy(n=>n.CommentText)
-                .Select(n=> 
-                new Comment
-                {
-                    CommentId = n.CommentId,
-                    CommentText = n.CommentText
-                }
-                ).ToList();
-            return Json(comments);
-        }
+        //public JsonResult DsComment(int postID)
+        //{
+        //    List<Comment> comments = await _context.Comment.Include(c => c.Post).Include(c => c.User).Where(m=>m.PostId == postID)
+        //        .OrderBy(n=>n.CommentText)
+        //        .Select(n=> 
+        //        new Comment
+        //        {
+        //            CommentId = n.CommentId,
+        //            CommentText = n.CommentText
+        //        }
+        //        ).ToList();
+        //    return Json(comments);
+        //}
 
         private bool PostExists(int id)
         {

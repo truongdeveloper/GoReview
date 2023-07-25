@@ -19,17 +19,16 @@
                 <h3 style="color: white">Viết Bài viết</h3>
             </a>
         </div>
-
-        
+            
         <div class="nav-right">
             <form method="get" asp-controller="Posts" asp-action="SearchPost">
-                <div class="search-box mx-3">              
-                        <img src="/images/search.png" alt="">
-                        <input type="text"  name="name" placeholder="Search">
+                <div class="search-box mx-3">
+                    <img src="/images/search.png" alt="">
+                    <input type="text" name="name" placeholder="Search">
                 </div>
-             </form>
-           
-            @if (User.Identity.IsAuthenticated)
+            </form>
+
+        @if (User.Identity.IsAuthenticated)
             {
 
                 <div class="nav-user-icon online" onclick="settingsMenutoggle()">
@@ -38,7 +37,6 @@
                 <!------------------- Sttings-menu----------------------->
 
                 <div class="settings-menu">
-
                     <div id="dark-btn">
                         <span> </span>
                     </div>
@@ -204,7 +202,8 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>   
+    <script src="~/js/search.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

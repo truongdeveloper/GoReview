@@ -18,9 +18,14 @@ namespace GoReview.Controllers
         {
             var _post = _context.Post.Include(p => p.Category).Include(p => p.User);
             return View(await _post.ToListAsync());
+        }     
+        [HttpPost]
+        public IActionResult Search(string name)
+        {
+            var post = _context.Post              
+               .Where(m => m.Title.Contains(name) || m.Content.Contains(name)).ToList();
+            return Json(post);
         }
-        [HttpGet]
- 
 
         // GET: PostController/Details/5
         public ActionResult Details(int id)
