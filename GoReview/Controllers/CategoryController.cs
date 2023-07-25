@@ -26,7 +26,7 @@ namespace GoReview.Controllers
         {
               return _context.Categories != null ? 
                           View(await _context.Categories.ToListAsync()) :
-                          Problem("Entity set 'BtlG21Context.Categories'  is null.");
+                          Problem("Entity set 'BtlG21Context.Categories' is null.");
         }
 
         // GET: Category/Details/5

@@ -8,7 +8,9 @@
 
 
 
-<div class="d-flex flex-column container post-col" style="max-width: 900px" id="post-home-container">
+<div id="searchResults">
+
+    <div class="post-container">
 
         <!------------- Post 1----------------- -->
         @for(var i = Model.Count() - 1;  i >= 0; i--)
@@ -38,7 +40,7 @@
                     <p class="post-text">
                         @post.Content
                     </p>
-                    <img src="@Url.Content("/images/" + post.Picture)" class="post-img" alt="">
+                     <img src="@Url.Content("~/image/" + post.Picture)" class="post-img" alt="">
                 
 
                     @*<p class="inline" id="btnToggle">Xem thêm</p> *@
@@ -72,7 +74,7 @@
 
                 </div>
                 <div class="collapse" id="Comment_@post.PostId">
-                            
+                   @*         
                     @for (var j = post.Feedbacks.Where(p => p.Comment != null).Count() - 1; j >= 0; j--)
                     {
                         var Comment = post.Feedbacks.ElementAt(j);
@@ -92,8 +94,8 @@
                         </div>
                             
                     }
-                    <div id="commentResult_@post.PostId"></div>
-                @if (isLogin)
+                    <div id="commentResult_@post.PostId"></div>*@
+                @*@if (isLogin)
                 {
                     <hr/>
                     <div class="comment mb-3" style="margin-right: 20%">
@@ -118,14 +120,15 @@
                     <hr/>
                     <h2>
                         Đăng nhập để bình luận
-                    </h2>  
-                }
+                    </h2>
+            *@
 
                 </div>
 
             </div>
         }   
         
+    </div>
     </div>
     <!--------------------------- right-sidebar ---------------------------------->
 

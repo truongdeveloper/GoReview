@@ -34,11 +34,11 @@
             }
         </div>
         <div class="nav-right">
-                <div class="search-box mx-3">              
+                @*<div class="search-box mx-3">              
                         <img src="/images/search.png" alt="">
                         <input type="text" id="inputSearch" placeholder="Search">
                         <button class="btn-primary" onclick="handleSearch()">Search</button>
-                </div>
+                </div>*@
             
             @if (isLogin)
             {
@@ -48,7 +48,6 @@
                 </div>
 
                 <!------------------- Sttings-menu----------------------->
-
                 <div class="settings-menu">
 
                     <div id="dark-btn">
@@ -86,12 +85,59 @@
         </div>
 
     </nav>
-    <div>
+    <div class="container-1">
         <main role="main" class="pb-3">
-            <div id="searchResults">
-                <!-- Kết quả tìm kiếm sẽ được hiển thị ở đây -->
+            <div class="d-flex">
+                <!----------- left-sidebar -------------->
+                <div class="left-sidebar">
+                    <div class="imp-links">
+                        <a href="/Admin"><img src="/images/news.png">Dash board</a>
+                        <a href="/Profile"><img src="/images/friends.png">My Account</a>
+                        
+                    </div>
+                    @(await Component.InvokeAsync("_Category"))
+
+                </div>
+                <!--------------- main content starts---------------------->
+                @RenderBody()
+                <!-------------  main Content Ends---------------- -->
+                <!--------------------------- right-sidebar ---------------------------------->
+
+                <div class="mx-2 right-sidebar">
+                    <div class="sidebar-title">
+                        <h4>Events</h4>
+                        <a href="#">See All</a>
+                    </div>
+
+                    <div class="event">
+                        <div class="left-event">
+                            <h3>25</h3>
+                            <span>March</span>
+                        </div>
+                        <div class="right-event">
+                            <h4>Social Media</h4>
+                            <p><i class="fa-solid fa-location-dot"></i> New Delhi</p>
+                            <a href="#">More Info</a>
+
+
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="left-event">
+                            <h3>29</h3>
+                            <span>March</span>
+                        </div>
+                        <div class="right-event">
+                            <h4> Technical Meet </h4>
+                            <p><i class="fa-solid fa-location-dot"></i> Noida, India</p>
+                            <a href="#">More Info</a>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
             </div>
-            @RenderBody()
         </main>
     </div>
 

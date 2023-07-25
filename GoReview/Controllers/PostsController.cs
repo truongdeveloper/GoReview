@@ -46,6 +46,11 @@ namespace GoReview.Controllers
             }
             
         }
+        public async Task<IActionResult> PostbyCategory(int? CatID)
+        {
+            var goReviewContext = _context.Posts.Include(p => p.Cat).Include(p => p.User).Where(m => m.CatId == CatID);
+            return View(await goReviewContext.ToListAsync());
+        }
 
         // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
