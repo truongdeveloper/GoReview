@@ -76,3 +76,36 @@ $(document).on('click', '#btn-like', function () {
         });
     }
 });
+
+$(document).on('click', '#btn-report', function () {
+    var postId = $(this).closest(".post").data("postid");
+    console.log(postId);
+    var isLikeAction = false;
+    if (!isLikeAction) {
+        isLikeAction = true;
+        $.ajax({
+            type: "POST",
+            url: "/Feedbacks/ReportAction",
+            data: { id: postId }, // Truyền tham số ID bài post vào đây
+            success: function (data) {
+                console.log(data)
+                if (data.isLiked) {
+                    // Thực hiện các tác vụ khi like thành công
+                    alert("Report thanh cong");
+                    location.reload();
+                } else {
+                    // Thực hiện các tác vụ khi unlike thành công
+                    alert("Report thanh cong");
+                    location.reload();
+                }
+                isLikeAction = false; // Đánh dấu là đã hoàn tất hành động like/unlike
+            },
+            error: function () {
+                // Xử lý lỗi khi gọi Ajax
+                alert("Đã xảy ra lỗi khi thực hiện hành động Report");
+                isLikeAction = false; // Đánh dấu là đã hoàn tất hành động like/unlike (dù có lỗi hay không)
+            }
+        });
+    }
+});
+

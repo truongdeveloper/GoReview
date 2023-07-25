@@ -17,6 +17,7 @@
     overflow: hidden; /* Ẩn đi các dòng vượt quá độ cao tối đa */
     line-height: 1.5em; /* Độ cao của mỗi dòng */
     transition: all 0.3s ease;
+    /*max-height: 3rem;*/
   }
   .post-text span {
     color: #626262;

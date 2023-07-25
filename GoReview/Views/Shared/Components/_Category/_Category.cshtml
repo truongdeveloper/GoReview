@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<GoReview.Models.Category>
+
+
+<div class="shortcut-links p-2 border h-auto">
+
+    <p class=" fw-bold text-danger"> Thể loại</p>
+    @foreach (var item in Model)
+    {
+        <a href="~/Posts/PostbyCategory?CatID=@item.CategoryId">
+            <img src="@Url.Content("/images/" + item.Image)">
+            @item.Title
+        </a>
+    }
+</div>

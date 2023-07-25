@@ -25,6 +25,12 @@ public partial class Post
 
     public string? Picture { get; set; }
 
+    public string? GPS { get; set; }
+
+    public double? Latitude { get; set; }
+
+    public double? Longitude { get; set; }
+
     [DataType(DataType.Date)]
     public DateTime? CreateDate { get; set; }
 
@@ -46,6 +52,8 @@ public partial class Post
 
     public bool IsLiked = false;
     public string? UserImage => User?.ImageUser;
+
+
 
 
     //[Required(ErrorMessage = "Trường này là bắt buộc.")]

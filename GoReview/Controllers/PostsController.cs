@@ -52,7 +52,7 @@ namespace GoReview.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CatId,Title,Content")] Post post, IFormFile Picture)
+        public async Task<IActionResult> Create([Bind("CatId,Title,Content,Longitude,Latitude")] Post post, IFormFile Picture)
         {
             try
             {
@@ -78,6 +78,30 @@ namespace GoReview.Controllers
                 return Problem(ex.Message);
             }
             
+        }
+
+        public async Task<IActionResult> PostbyCategory(int? CatID)
+        {
+            var goReviewContext = _context.Posts.Include(p => p.Cat).Include(p => p.User).Where(m => m.CatId == CatID);
+            var post = await goReviewContext.ToListAsync();
+            return View("~/Views/Home/Index.cshtml", post);
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Posts == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(m => m.PostId == id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
         }
 
         // GET: Posts/Edit/5
@@ -110,7 +134,7 @@ namespace GoReview.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 try
                 {

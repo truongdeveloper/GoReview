@@ -271,5 +271,55 @@ namespace GoReview.Controllers
                 return Json(new { success = false, message = "Đã xảy ra lỗi khi thực hiện hành động like." });
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ReportAction(int id)
+        {
+            try
+            {
+                // Kiểm tra xem người dùng đã đăng nhập chưa
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện hành động này." });
+                }
+
+                IQueryable<Post> query = _context.Posts.Include(p => p.Cat).Include(p => p.User).Include(p => p.Feedbacks);
+                // Lấy ID của người dùng đăng nhập
+                int loggedInUserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                // Tìm bài viết dựa trên postId
+                Post post = query.FirstOrDefault(p => p.PostId == id);
+
+                // Kiểm tra xem bài viết có tồn tại không
+                if (post == null)
+                {
+                    return Json(new { success = false, message = "Bài viết không tồn tại." });
+                }
+
+                Feedback feedback = new Feedback
+                {
+                    UserId = loggedInUserId,
+                    PostId = id,
+                    Like = false,
+                    Comment = null,
+                    Report = true,
+                };
+                _context.Feedbacks.Add(feedback);
+                await _context.SaveChangesAsync();
+
+                // Kiểm tra xem người dùng đã like bài viết hay chưa
+                //bool isLiked = post.Feedbacks.Any(f => f.UserId == loggedInUserId && f.Like == true);
+
+
+
+                // Trả về kết quả thành công
+                return Json(new { isLiked = false, });
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                return Json(new { success = false, message = "Đã xảy ra lỗi khi thực hiện hành động like." });
+            }
+        }
     }
 }

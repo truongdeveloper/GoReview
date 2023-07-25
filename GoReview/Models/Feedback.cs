@@ -23,6 +23,8 @@ public partial class Feedback
 
     public string? Comment { get; set; }
 
+    public bool? Report { get; set; }
+
     public virtual Post Post { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
